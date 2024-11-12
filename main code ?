@@ -1,0 +1,94 @@
+import pygame
+
+pygame.init()
+screen = pygame.display.set_mode((1280, 720))
+pygame.display.set_caption("poker screen")
+blue = (21, 76, 121)
+
+#takes the images and resizes them appropriatly 
+startIMG = pygame.image.load('start.png').convert_alpha()
+statsIMG = pygame.image.load('stats.png').convert_alpha()
+optionsIMG = pygame.image.load('options.png').convert_alpha()
+
+startIMG = pygame.transform.scale(startIMG, (400, 200))
+optionsIMG = pygame.transform.scale(optionsIMG, (400, 100))
+statsIMG = pygame.transform.scale(statsIMG, (400, 100))
+
+
+class Button:
+	def __init__(self, x, y, image):
+		self.image = image
+		self.rect = self.image.get_rect()
+		self.rect.topleft = (x, y)
+
+	def draw(self, surface):
+		surface.blit(self.image, (self.rect.x, self.rect.y))
+
+	def is_clicked(self):
+		#checks if the left mouse button is pressed and mouse is over the button
+		if pygame.mouse.get_pressed()[0]:
+			if self.rect.collidepoint(pygame.mouse.get_pos()): # this line checks if the event that has taken place has happened in the rectangle
+				return True
+		return False
+
+class Screen():
+	def __init__(self):
+		self.font = pygame.font.Font(None, 74) # this line caused so many issues
+	def main_menu(self):
+		screen.fill((21, 76, 121))
+		sb.draw(screen)
+		ob.draw(screen)
+		stb.draw(screen)
+# the following methods display the screens and the nessecary settings
+	def game_screen(self): 
+		screen.fill((blue)) 
+		text = self.font.render("Game Screen", True, (255, 255, 255))
+		screen.blit(text, (500, 300))
+#following two are a work in progress now as a) relys on the stats that need to be collected from games b) relates the AI difficultly which has not been coded yet
+	def options_screen(self):
+		screen.fill((50, 50, 50))  
+		text = self.font.render("Options Screen", True, (255, 255, 255))
+		screen.blit(text, (500, 300))
+
+	def stats_screen(self):
+		screen.fill((0, 0, 128)) 
+		text = self.font.render("Stats Screen", True, (255, 255, 255))
+		screen.blit(text, (500, 300))
+
+# creates the buttons from the button class
+sb = Button(440, 280, startIMG)
+ob = Button(440, 470, optionsIMG)
+stb = Button(440, 580, statsIMG)
+
+screens = Screen()
+
+current_screen = "main_menu"
+
+# main game loop
+game = True
+while game:
+	#screen change
+	if current_screen == "main_menu":
+		screens.main_menu()
+	elif current_screen == "game":
+		screens.game_screen()
+	elif current_screen == "options":
+		screens.options_screen()
+	elif current_screen == "stats":
+		screens.stats_screen()
+	pygame.display.flip()
+
+	# Event handler (when the exit button is pressed)
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			run = False
+			pygame.quit()
+
+	# checks if a button is pressed and if it is then it will call the method that relates to the aformentioned button
+	if current_screen == "main_menu":
+		if sb.is_clicked():
+			current_screen = "game"
+		elif ob.is_clicked():
+			current_screen = "options"
+		elif stb.is_clicked():
+			current_screen = "stats"
