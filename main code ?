@@ -6,7 +6,7 @@ pygame.display.set_caption("poker screen")
 blue = (21, 76, 121)
 
 #takes the images and resizes them appropriatly 
-startIMG = pygame.image.load('start.png').convert_alpha()
+startIMG = pygame.image.load('start.png').convert_alpha() #makes it easier to manage pngs
 statsIMG = pygame.image.load('stats.png').convert_alpha()
 optionsIMG = pygame.image.load('options.png').convert_alpha()
 
@@ -18,11 +18,11 @@ statsIMG = pygame.transform.scale(statsIMG, (400, 100))
 class Button:
 	def __init__(self, x, y, image):
 		self.image = image
-		self.rect = self.image.get_rect()
-		self.rect.topleft = (x, y)
+		self.rect = self.image.get_rect() # creates a py game rectangle so it can help with positioning
+		self.rect.topleft = (x, y) # when we have this set up with top left it allows us to us this as the base of a an image, rather than setting each point
 
 	def draw(self, surface):
-		surface.blit(self.image, (self.rect.x, self.rect.y))
+		surface.blit(self.image, (self.rect.x, self.rect.y))#allows us to draw on top of an image (our screen)
 
 	def is_clicked(self):
 		#checks if the left mouse button is pressed and mouse is over the button
@@ -47,7 +47,7 @@ class Screen():
 #following two are a work in progress now as a) relys on the stats that need to be collected from games b) relates the AI difficultly which has not been coded yet
 	def options_screen(self):
 		screen.fill((50, 50, 50))  
-		text = self.font.render("Options Screen", True, (255, 255, 255))
+		text = self.font.render("Options Screen", True, (255, 255, 255))# this is a place holder at the moment where it just displays what the screen is with a piece of text 
 		screen.blit(text, (500, 300))
 
 	def stats_screen(self):
