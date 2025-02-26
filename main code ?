@@ -84,10 +84,9 @@ class Deck():
     random.shuffle(self.deck)
     return self.deck
   def deal_card(self, holder):
-    random.randint(0,51)
     for i in range(2):
-      card = self.deck[random.randint(0,51)]
-      holder.self.hand[i-1]=card
+      card = self.deck[random.randint(0, len(self.deck)-1)]
+      holder.hand.append(card)
 
 class Player():
   def __init__(self, name, chips, win, loss):
@@ -118,7 +117,9 @@ current_screen = "main_menu" # this is the screen that is currently being displa
 game = True
 print(cards.deck)
 print(len(cards.deck))
-cards.deal_card(self,Player)
+player1 = Player("Player 1", 1000, 0, 0) # this is the player object that will be used to store the players name, chips and wins and losses
+cards.deal_card(player1) 
+print(player1.hand)
 
 while game:
   #screen change
